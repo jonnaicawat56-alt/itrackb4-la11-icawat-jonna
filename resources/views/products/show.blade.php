@@ -4,44 +4,40 @@
 
 @section('content')
 
-<div class="container">
+<h2 style="margin-bottom: 20px;">Product Details</h2>
 
-    <h2>Product Details</h2>
+<div style="
+    background: white;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    padding: 20px;
+    max-width: 350px;
+">
 
-    <div class="card mt-4">
+    <h3 style="margin-top: 0; margin-bottom: 15px;">
+        {{ $product['name'] }}
+    </h3>
 
-        <div class="card-body">
+    <p>
+        <strong>ID:</strong>
+        {{ $product['id'] }}
+    </p>
 
-            <p>
-                <strong>ID:</strong>
-                {{ $product['id'] }}
-            </p>
+    <p>
+        <strong>Price:</strong>
+        ₱{{ number_format($product['price'], 2) }}
+    </p>
 
-            <p>
-                <strong>Name:</strong>
-                {{ $product['name'] }}
-            </p>
+    <p>
+        <strong>Stock:</strong>
+        {{ $product['stock'] }}
+    </p>
 
-            <p>
-                <strong>Price:</strong>
-                ₱{{ number_format($product['price'], 2) }}
-            </p>
-
-            <p>
-                <strong>Stock:</strong>
-                {{ $product['stock'] }}
-            </p>
-
-            <a
-                href="{{ route('products.index') }}"
-                class="btn btn-secondary"
-            >
-                Back to Products
-            </a>
-
-        </div>
-
-    </div>
+    <a href="{{ route('products.index') }}"
+       class="btn btn-primary"
+       style="margin-top: 10px;">
+        Back to Products
+    </a>
 
 </div>
 
