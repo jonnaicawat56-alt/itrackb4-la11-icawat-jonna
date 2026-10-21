@@ -3,119 +3,60 @@
 @section('title', 'Add Product')
 
 @section('content')
+<h2>Add Product</h2>
 
-    <div class="product-form">
+@if ($errors->any())
+    <div style="color: #dc3545; margin-bottom: 15px;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-        <h2>Add New Product</h2>
+<form action="{{ route('products.store') }}" method="POST">
+    @csrf
 
-        <form action="{{ route('products.store') }}" method="POST">
-
-            @csrf
-
-            <!-- Product Name -->
-            <div class="form-group">
-                <label for="name">Product Name</label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="{{ old('name') }}"
-                >
-
-                @error('name')
-                    <div class="error">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-
-            <!-- Price -->
-            <div class="form-group">
-                <label for="price">Price</label>
-
-                <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    value="{{ old('price') }}"
-                    step="0.01"
-                >
-
-                @error('price')
-                    <div class="error">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-
-            <!-- Stock -->
-            <div class="form-group">
-                <label for="stock">Stock</label>
-
-                <select id="stock" name="stock">
-
-                    <option value="">
-                        Select Stock
-                    </option>
-
-                    <option value="0" {{ old('stock') == '0' ? 'selected' : '' }}>
-                        0
-                    </option>
-
-                    <option value="10" {{ old('stock') == '10' ? 'selected' : '' }}>
-                        10
-                    </option>
-
-                    <option value="20" {{ old('stock') == '20' ? 'selected' : '' }}>
-                        20
-                    </option>
-
-                    <option value="30" {{ old('stock') == '30' ? 'selected' : '' }}>
-                        30
-                    </option>
-
-                    <option value="40" {{ old('stock') == '40' ? 'selected' : '' }}>
-                        40
-                    </option>
-
-                    <option value="50" {{ old('stock') == '50' ? 'selected' : '' }}>
-                        50
-                    </option>
-
-                </select>
-
-                @error('stock')
-                    <div class="error">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-
-            <!-- Buttons -->
-            <div class="form-buttons">
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Add Product
-                </button>
-
-                <a
-                    href="{{ route('products.index') }}"
-                    class="btn btn-secondary"
-                >
-                    Cancel
-                </a>
-
-            </div>
-
-        </form>
-
+    <div style="margin-bottom: 15px;">
+        <label for="name">Product Name</label><br>
+        <input type="text" id="name" name="name"
+               value="{{ old('name') }}" required>
     </div>
 
+    <div style="margin-bottom: 15px;">
+        <label for="category_id">Category</label><br>
+        <select id="category_id" name="category_id" required>
+            <option value="">-- Select Category --</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="price">Price</label><br>
+        <input type="number" id="price" name="price"
+               value="{{ old('price') }}" min="0" required>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label for="stock">Stock</label><br>
+        <select id="stock" name="stock" required>
+            <option value="">-- Select Stock --</option>
+            @foreach ([0, 10, 15, 18, 20, 25, 30] as $stock)
+                <option value="{{ $stock }}"
+                    {{ old('stock') == (string) $stock ? 'selected' : '' }}>
+                    {{ $stock }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <button type="submit">Save Product</button>
+    <a href="{{ route('products.index') }}">Cancel</a>
+</form>
 @endsection

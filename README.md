@@ -1,14 +1,14 @@
-Laboratory Activity 9
-Your Own Table, Your Own Model
+Laboratory Activity 10
+Your Own Lookup Table
 
-F1. Which column did you make nullable, and why that one and not another?
+G1. Which column did you turn into a table, and why that one and not another?
 
-I made the description column nullable because not all products need a description. I chose this column because the other details, like name, price, stock, and availability, are needed for every product.
+I used the category_id column in the products table to connect each product to its category in the categories table. I chose this because each product belongs to one category, and one category can have many products. This also makes it easier to show the category name on the products list.
 
-F2. Which step failed first for you, and what did the error say?
+G2. What number did screenshot 6 show, and why exactly that number?
 
-The first error happened when I tried to add a product before putting $fillable in my Product model. Laravel showed a mass-assignment error because the model did not allow the product details to be added yet.
+Screenshot 6 showed 6 queries because the system used one query to get all the products and five more queries to get the category of each product separately. So, that’s one query for the products plus five queries for the categories. This happens because the categories are loaded one by one instead of all at once.
 
-F3. You changed no Blade file in Part D, yet your pages still work. Why not?
+G3. Your belongsTo method is named in the singular. What would break if you made it plural?
 
-My pages still work because I only changed how the controller gets the product data. Instead of JSON, it now uses Eloquent, and I used toArray() so the data still works with my existing Blade files.
+I used category() in the singular because each product belongs to only one category. If I changed it to categories() without updating the other code, with('category') and $product->category would stop working because Laravel would not find the relationship using the old name.
