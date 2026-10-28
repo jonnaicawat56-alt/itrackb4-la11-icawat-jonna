@@ -1,7 +1,6 @@
 Laboratory Activity 11
 Finish Your Own CRUD
 
-Question
 G1.Route model binding needs two things to be true. Name both, and say what happens when only one of them is? 
 Route model binding needs two things: the parameter must be type-hinted with the model class (`Product $product`), and the parameter name must match the route segment (`{product}`, so `$product`). If only the type-hint is right and the name is wrong, no record is bound, so the controller gets nothing it can use. If only the name is right and the type-hint is missing, the controller receives the raw id from the URL and not a Product model.
 
