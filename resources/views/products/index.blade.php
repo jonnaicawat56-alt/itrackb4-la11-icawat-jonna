@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('title', 'My Product List')
@@ -131,6 +130,7 @@
             <th>Category</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
@@ -142,7 +142,7 @@
                 <td>{{ $product->id }}</td>
 
                 <td>
-                    <a href="{{ route('products.show', $product->id) }}">
+                    <a href="{{ route('products.show', $product) }}">
                         {{ $product->name }}
                     </a>
                 </td>
@@ -182,10 +182,22 @@
                         </span>
                     @endif
                 </td>
+
+                <td>
+                    <a href="{{ route('products.edit', $product) }}"
+                       class="btn btn-primary btn-sm">Edit</a>
+
+                    <form action="{{ route('products.destroy', $product) }}" method="POST"
+                          onsubmit="return confirm('Delete this record?')" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
             </tr>
         @empty
             <tr>
-                <td colspan="6">No products found.</td>
+                <td colspan="7">No products found.</td>
             </tr>
         @endforelse
     </tbody>
